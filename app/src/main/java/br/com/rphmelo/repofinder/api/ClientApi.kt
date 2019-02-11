@@ -2,10 +2,13 @@ package br.com.rphmelo.repofinder.api
 
 import android.content.Context
 import br.com.rphmelo.repofinder.model.RepoService
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -13,10 +16,15 @@ import java.util.concurrent.TimeUnit
 class ClientApi<T> {
 
     fun getClient(c: Class<T>): T {
+        val okhttp = OkHttpClient.Builder()
+                .addNetworkInterceptor(StethoInterceptor())
+                .build();
+
         val retrofit = Retrofit.Builder()
                 .client(getOkhttpClientAuth().build())
                 .baseUrl("https://api.github.com")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttp)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
 
@@ -40,25 +48,23 @@ fun getPicassoAuth(context: Context): Picasso {
 
 fun getOkhttpClientAuth(): OkHttpClient.Builder {
     return OkHttpClient.Builder()
-            //s.addInterceptor(AuthInterceptor())
+            .addInterceptor(AuthInterceptor())
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
 }
 
-/*class AuthInterceptor: Interceptor {
+class AuthInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         val requestBuilder = chain!!.request().newBuilder()
-        requestBuilder.addHeader("", "")
+//        requestBuilder.addHeader("", "")
         val request = requestBuilder.build()
         val response = chain.proceed(request)
-        if (response.code() == 401) {
-            Log.e("", "")
-        }
+
         return response
     }
 
-}*/
+}
 
 fun getRepoService(): RepoService {
     return ClientApi<RepoService>().getClient(RepoService::class.java)

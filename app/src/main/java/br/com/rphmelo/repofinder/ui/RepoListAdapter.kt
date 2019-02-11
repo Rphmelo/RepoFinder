@@ -30,9 +30,18 @@ class RepoListAdapter(
 
 class RepoListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bindView(repo: Repo) = with(itemView){
+        tvRepoTitle.text = repo.name
+        tvRepoDescription.text = repo.description
+        tvFork.text = repo.forksCounts.toString()
+        tvUsername.text = repo.owner.login
+        tvNameLastName.text = repo.owner.login
+
+        setImage(repo.owner.avatarUrl)
+    }
+
+    fun setImage(imageUrl: String) = with(itemView){
         getPicassoAuth(itemView.context)
-                .load("")
-                .centerCrop()
+                .load(imageUrl)
                 .into(ivUser)
     }
 }

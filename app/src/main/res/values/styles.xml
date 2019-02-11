@@ -8,22 +8,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="divider">
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">#ccc</item>
-    </style>
-
     <style name="repo_detail">
         <item name="android:drawableTint">@color/repo_detail</item>
         <item name="android:textColor">@color/repo_detail</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="repo_title">
         <item name="android:textColor">@color/repo_title</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="user_info_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textAlignment">textEnd</item>
     </style>
 
 </resources>

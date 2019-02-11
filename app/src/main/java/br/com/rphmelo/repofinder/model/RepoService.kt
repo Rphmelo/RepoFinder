@@ -7,8 +7,8 @@ import retrofit2.http.Query
 interface RepoService {
     @GET("/search/repositories")
     fun searchRepos(
-            @Query("language") language: String,
+            @Query("q") q: String,
             @Query("sort") sort: String,
             @Query("page") page: Int
-    ): Observable<Repo>
+    ): Observable<RepoResponse>
 }

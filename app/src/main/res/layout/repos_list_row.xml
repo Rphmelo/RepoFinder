@@ -28,14 +28,16 @@
             app:srcCompat="@mipmap/ic_launcher_round" />
 
         <TextView
-            style="@style/repo_title"
             android:id="@+id/tvRepoTitle"
-            android:layout_width="wrap_content"
+            style="@style/repo_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="PokeApp"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvUsername"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,55 +49,42 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="An app for showing pokemon information"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/ivUser"
-            app:layout_constraintHorizontal_bias="1.0"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvUsername"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvRepoTitle" />
 
         <TextView
             android:id="@+id/tvNameLastName"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            style="@style/user_info_style"
             android:text="Raphael Melo"
-            android:textSize="11sp"
+            android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvRepoDescription"
             app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
 
         <TextView
             android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
+            style="@style/user_info_style"
+            android:layout_width="79dp"
             android:text="rphmelo"
-            android:textSize="13sp"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivUser" />
 
         <TextView
             style="@style/repo_detail"
             android:id="@+id/tvFork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:drawableStart="@drawable/fork_icon"
+            android:drawableTop="@drawable/fork_icon"
             android:text="20"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvRepoDescription" />
 
         <TextView
-            style="@style/repo_detail"
             android:id="@+id/tvStars"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:drawableStart="@drawable/star_icon"
+            style="@style/repo_detail"
+            android:drawableTop="@drawable/star_icon"
             android:text="500"
-            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/tvFork"
             app:layout_constraintTop_toBottomOf="@+id/tvRepoDescription" />
 
