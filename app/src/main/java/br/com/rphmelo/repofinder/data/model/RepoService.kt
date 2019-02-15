@@ -1,4 +1,4 @@
-package br.com.rphmelo.repofinder.model
+package br.com.rphmelo.repofinder.data.model
 
 import io.reactivex.Observable
 import retrofit2.http.GET

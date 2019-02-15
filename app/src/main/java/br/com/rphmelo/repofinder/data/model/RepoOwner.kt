@@ -1,4 +1,4 @@
-package br.com.rphmelo.repofinder.model
+package br.com.rphmelo.repofinder.data.model
 
 import com.google.gson.annotations.SerializedName
 

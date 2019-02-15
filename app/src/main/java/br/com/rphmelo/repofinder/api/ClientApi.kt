@@ -1,7 +1,7 @@
 package br.com.rphmelo.repofinder.api
 
 import android.content.Context
-import br.com.rphmelo.repofinder.model.RepoService
+import br.com.rphmelo.repofinder.data.model.RepoService
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.squareup.picasso.OkHttp3Downloader

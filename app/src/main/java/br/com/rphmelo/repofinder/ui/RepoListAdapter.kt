@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.rphmelo.repofinder.R
 import br.com.rphmelo.repofinder.api.getPicassoAuth
-import br.com.rphmelo.repofinder.model.Repo
+import br.com.rphmelo.repofinder.data.model.Repo
 import kotlinx.android.synthetic.main.repos_list_row.view.*
 
 class RepoListAdapter(

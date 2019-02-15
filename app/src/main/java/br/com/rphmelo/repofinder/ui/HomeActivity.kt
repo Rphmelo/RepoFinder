@@ -1,24 +1,29 @@
 package br.com.rphmelo.repofinder.ui
 
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import br.com.rphmelo.repofinder.R
-import br.com.rphmelo.repofinder.model.RepoSearchRequest
-import io.reactivex.Observer
+import br.com.rphmelo.repofinder.data.model.RepoSearchRequest
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
+import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
 
     lateinit var repoViewModel: RepoViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        repoViewModel = ViewModelProviders.of(this).get(RepoViewModel::class.java)
+        this.configureDagger()
+        this.configureViewModel()
+
         searchRepos()
     }
 
@@ -28,6 +33,14 @@ class HomeActivity : AppCompatActivity() {
             val recycleView = rvRepos
             recycleView.adapter = RepoListAdapter(this, it.items)
             recycleView.layoutManager = LinearLayoutManager(this)
-        }, onError ={})
+        }, onError = {})
+    }
+
+    private fun configureDagger() {
+        AndroidInjection.inject(this)
+    }
+
+    private fun configureViewModel() {
+        repoViewModel = ViewModelProviders.of(this, viewModelFactory).get(RepoViewModel::class.java)
     }
 }
