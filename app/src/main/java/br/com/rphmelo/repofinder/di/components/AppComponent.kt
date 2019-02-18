@@ -2,24 +2,21 @@ package br.com.rphmelo.repofinder.di.components
 
 import android.app.Application
 import br.com.rphmelo.repofinder.MyApplication
-import br.com.rphmelo.repofinder.di.modules.ActivityModule
-import br.com.rphmelo.repofinder.di.modules.AppModule
-import br.com.rphmelo.repofinder.di.modules.RepositoryModule
-import br.com.rphmelo.repofinder.di.modules.ViewModelModule
+import br.com.rphmelo.repofinder.di.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
-
 @Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
     ActivityModule::class,
+    FragmentModule::class,
     ViewModelModule::class,
-    RepositoryModule::class
+    RepositoryModule::class,
+    AppModule::class
 ])
-
 interface AppComponent {
 
     @Component.Builder
@@ -29,7 +26,5 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun inject(app: MyApplication){
-
-    }
+    fun inject(app: MyApplication)
 }

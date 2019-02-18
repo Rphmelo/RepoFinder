@@ -4,6 +4,7 @@ import br.com.rphmelo.repofinder.data.model.RepoService
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -14,18 +15,22 @@ import javax.inject.Singleton
 
 @Module
 class NetModule {
+
     @Provides
+    @Singleton
     fun provideGson(): Gson {
         return GsonBuilder().create()
     }
 
     @Provides
-    fun provideRetrofit(gson: Gson,
-                        @Named("githubURL") githubURL: String,
-                        okhttp: OkHttpClient): Retrofit {
-
+    @Singleton
+    fun provideRetrofit(
+            gson: Gson,
+            @Named("githubURL") githubURL: String,
+            okhttp: OkHttpClient): Retrofit {
         return Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(githubURL)
                 .client(okhttp)
                 .build()

@@ -1,6 +1,5 @@
 package br.com.rphmelo.repofinder.data.repository
 
-import br.com.rphmelo.repofinder.api.getRepoService
 import br.com.rphmelo.repofinder.data.model.RepoResponse
 import br.com.rphmelo.repofinder.data.model.RepoSearchRequest
 import br.com.rphmelo.repofinder.data.model.RepoService
