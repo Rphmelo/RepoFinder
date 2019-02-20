@@ -1,5 +1,6 @@
 package br.com.rphmelo.repofinder.ui.fragments
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -17,10 +18,6 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass.
- *
- */
 class HomeFragment : Fragment() {
 
     lateinit var repoViewModel: RepoViewModel
@@ -30,7 +27,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -42,7 +38,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun searchRepos() {
+        repoViewModel.isLoading.observe(this, Observer {
+            if(it == true){
+                pbLoading.visibility = View.VISIBLE
+            } else {
+                pbLoading.visibility = View.GONE
+            }
+        })
+
         val repoSearchRequest = RepoSearchRequest("language:java", "stars", 1)
+
         repoViewModel.searchRepos(repoSearchRequest, onNext = {
             val recycleView = rvRepos
             recycleView.adapter = RepoListAdapter(context!!, it.items)

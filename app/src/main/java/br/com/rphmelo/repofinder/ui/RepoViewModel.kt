@@ -9,11 +9,12 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
-class RepoViewModel @Inject constructor(var repoRepository: RepoRepository) : ViewModel() {
+class RepoViewModel @Inject constructor(var repoRepository: RepoRepository, private val executor: Executor) : ViewModel() {
 
-    val isLoading = MutableLiveData<Boolean>()
+    var isLoading = MutableLiveData<Boolean>()
     var disposable: Disposable? = null
 
     fun searchRepos(
@@ -23,28 +24,36 @@ class RepoViewModel @Inject constructor(var repoRepository: RepoRepository) : Vi
     ) {
         isLoading.value = true
 
-        repoRepository.searchRepos(repoSearchRequest)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object: Observer<RepoResponse> {
-                    override fun onComplete() {
+        executor.execute {
+            repoRepository.searchRepos(repoSearchRequest)
+                    .subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object: Observer<RepoResponse> {
+                        override fun onComplete() {
+                            isLoading.value = false
+                        }
 
-                    }
+                        override fun onSubscribe(d: Disposable) {
+                            disposable = d
+                        }
 
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+                        override fun onNext(repoResponse: RepoResponse) {
+                            onNext(repoResponse)
+                        }
 
-                    override fun onNext(repoResponse: RepoResponse) {
-                        onNext(repoResponse)
-                    }
+                        override fun onError(e: Throwable) {
+                            onError(e)
+                        }
 
-                    override fun onError(e: Throwable) {
-                        onError(e)
-                    }
+                    })
+        }
 
-                })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        dispose()
     }
     fun dispose(){
         disposable?.dispose()

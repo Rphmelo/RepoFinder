@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import br.com.rphmelo.repofinder.R
 import br.com.rphmelo.repofinder.data.model.Repo
 import kotlinx.android.synthetic.main.repos_list_row.view.*
+import javax.inject.Inject
 
-class RepoListAdapter(
+class RepoListAdapter @Inject constructor(
         private val context: Context,
         private val repoList: List<Repo>
 ): RecyclerView.Adapter<RepoListViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoListViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.repos_list_row, parent, false)
         return RepoListViewHolder(view)
@@ -28,6 +30,7 @@ class RepoListAdapter(
 }
 
 class RepoListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
     fun bindView(repo: Repo) = with(itemView){
         tvRepoTitle.text = repo.name
         tvRepoDescription.text = repo.description
@@ -35,12 +38,8 @@ class RepoListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         tvUsername.text = repo.owner.login
         tvNameLastName.text = repo.owner.login
 
-        setImage(repo.owner.avatarUrl)
-    }
-
-    fun setImage(imageUrl: String) = with(itemView){
-//        getPicassoAuth(itemView.context)
-//                .load(imageUrl)
+//        picasso.load(repo.owner.avatarUrl)
 //                .into(ivUser)
     }
+
 }

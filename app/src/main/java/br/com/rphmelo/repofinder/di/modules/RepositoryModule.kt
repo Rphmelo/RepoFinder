@@ -4,7 +4,6 @@ import br.com.rphmelo.repofinder.data.model.RepoService
 import br.com.rphmelo.repofinder.data.repository.RepoRepository
 import dagger.Module
 import dagger.Provides
-import java.util.concurrent.Executor
 import javax.inject.Singleton
 
 @Module(includes = [
