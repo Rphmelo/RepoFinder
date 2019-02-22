@@ -7,16 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.rphmelo.repofinder.R
 import br.com.rphmelo.repofinder.data.model.Repo
+import br.com.rphmelo.repofinder.util.getPicasso
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.repos_list_row.view.*
 import javax.inject.Inject
 
 class RepoListAdapter @Inject constructor(
         private val context: Context,
         private val repoList: List<Repo>
-): RecyclerView.Adapter<RepoListViewHolder>() {
+): RecyclerView.Adapter<RepoListAdapter.RepoListViewHolder>() {
+
+    lateinit var picasso: Picasso
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoListViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.repos_list_row, parent, false)
+        picasso = getPicasso(context!!)
         return RepoListViewHolder(view)
     }
 
@@ -27,19 +32,20 @@ class RepoListAdapter @Inject constructor(
     override fun onBindViewHolder(holder: RepoListViewHolder, position: Int) {
         holder.bindView(repoList[position])
     }
-}
 
-class RepoListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class RepoListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-    fun bindView(repo: Repo) = with(itemView){
-        tvRepoTitle.text = repo.name
-        tvRepoDescription.text = repo.description
-        tvFork.text = repo.forksCounts.toString()
-        tvUsername.text = repo.owner.login
-        tvNameLastName.text = repo.owner.login
+        fun bindView(repo: Repo) = with(itemView){
+            tvRepoTitle.text = repo.name
+            tvRepoDescription.text = repo.description
+            tvFork.text = repo.forksCounts.toString()
+            tvUsername.text = repo.owner.login
+            tvNameLastName.text = repo.owner.login
 
-//        picasso.load(repo.owner.avatarUrl)
-//                .into(ivUser)
+            picasso.load(repo.owner.avatarUrl)
+                    .into(ivUser)
+        }
+
     }
-
 }
+
