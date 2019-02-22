@@ -13,5 +13,7 @@ data class Repo(
         @SerializedName("open_issues_count") val openIssuesCount: Int,
         @SerializedName("forks_count") val forksCounts: Int,
         @SerializedName("html_url") val htmlUrl: String,
-        @SerializedName("owner") val owner: RepoOwner
+        @SerializedName("owner") val owner: RepoOwner,
+        @SerializedName("stargazers_count") val stars: Int
+
 )

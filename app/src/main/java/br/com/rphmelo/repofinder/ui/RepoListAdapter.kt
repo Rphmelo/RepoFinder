@@ -41,7 +41,7 @@ class RepoListAdapter @Inject constructor(
             tvFork.text = repo.forksCounts.toString()
             tvUsername.text = repo.owner.login
             tvNameLastName.text = repo.owner.login
-
+            tvStars.text = repo.stars.toString()
             picasso.load(repo.owner.avatarUrl)
                     .into(ivUser)
         }
