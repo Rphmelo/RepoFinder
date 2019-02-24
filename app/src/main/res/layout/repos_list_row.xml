@@ -10,7 +10,6 @@
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -55,21 +54,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tvRepoTitle" />
 
         <TextView
-            android:id="@+id/tvNameLastName"
-            style="@style/user_info_style"
-            android:text="Raphael Melo"
-            android:textSize="8sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvRepoDescription"
-            app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
-
-        <TextView
             android:id="@+id/tvUsername"
             style="@style/user_info_style"
-            android:layout_width="79dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:accessibilityLiveRegion="assertive"
             android:text="rphmelo"
             android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ivUser"
             app:layout_constraintTop_toBottomOf="@+id/ivUser" />
 
         <TextView
