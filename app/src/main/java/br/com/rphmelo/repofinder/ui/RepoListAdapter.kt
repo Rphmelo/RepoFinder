@@ -10,11 +10,10 @@ import br.com.rphmelo.repofinder.data.model.Repo
 import br.com.rphmelo.repofinder.util.getPicasso
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.repos_list_row.view.*
-import javax.inject.Inject
 
-class RepoListAdapter @Inject constructor(
+class RepoListAdapter (
         private val context: Context,
-        private val repoList: List<Repo>
+        private var repoList: List<Repo>
 ): RecyclerView.Adapter<RepoListAdapter.RepoListViewHolder>() {
 
     lateinit var picasso: Picasso
@@ -40,10 +39,11 @@ class RepoListAdapter @Inject constructor(
             tvRepoDescription.text = repo.description
             tvFork.text = repo.forksCounts.toString()
             tvUsername.text = repo.owner.login
-            tvNameLastName.text = repo.owner.login
             tvStars.text = repo.stars.toString()
-            picasso.load(repo.owner.avatarUrl)
-                    .into(ivUser)
+            repo.owner.avatarUrl.let {
+                picasso.load(it)
+                        .into(ivUser)
+            }
         }
 
     }

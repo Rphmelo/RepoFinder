@@ -16,7 +16,6 @@
         <ImageView
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-
             android:id="@+id/ivUser"
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -24,7 +23,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@drawable/user" />
 
         <TextView
             android:id="@+id/tvRepoTitle"

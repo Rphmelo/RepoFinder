@@ -14,6 +14,22 @@ data class Repo(
         @SerializedName("forks_count") val forksCounts: Int,
         @SerializedName("html_url") val htmlUrl: String,
         @SerializedName("owner") val owner: RepoOwner,
-        @SerializedName("stargazers_count") val stars: Int
-
-)
+        @SerializedName("stargazers_count") val stars: Int,
+        @SerializedName("has_issues") val hasIssues: Boolean
+) {
+    constructor(): this(
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            0,
+            0,
+            "",
+            RepoOwner(),
+            0,
+            false
+    )
+}

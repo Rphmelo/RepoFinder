@@ -2,6 +2,7 @@ package br.com.rphmelo.repofinder.ui
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import br.com.rphmelo.repofinder.data.model.Repo
 import br.com.rphmelo.repofinder.data.model.RepoResponse
 import br.com.rphmelo.repofinder.data.model.RepoSearchRequest
 import br.com.rphmelo.repofinder.data.repository.RepoRepository
@@ -15,13 +16,11 @@ import javax.inject.Inject
 class RepoViewModel @Inject constructor(var repoRepository: RepoRepository, private val executor: Executor) : ViewModel() {
 
     var isLoading = MutableLiveData<Boolean>()
+    var repoList = MutableLiveData<List<Repo>>()
+    var repoError = MutableLiveData<Throwable>()
     var disposable: Disposable? = null
 
-    fun searchRepos(
-            repoSearchRequest: RepoSearchRequest,
-            onNext: (RepoResponse) -> Unit,
-            onError: (Throwable?) -> Unit
-    ) {
+    fun searchRepos(repoSearchRequest: RepoSearchRequest) {
         isLoading.value = true
 
         executor.execute {
@@ -39,11 +38,11 @@ class RepoViewModel @Inject constructor(var repoRepository: RepoRepository, priv
                         }
 
                         override fun onNext(repoResponse: RepoResponse) {
-                            onNext(repoResponse)
+                            repoList.value = repoResponse.items
                         }
 
                         override fun onError(e: Throwable) {
-                            onError(e)
+                            repoError.value = e
                         }
 
                     })

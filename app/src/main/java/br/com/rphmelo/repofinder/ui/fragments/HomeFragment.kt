@@ -6,9 +6,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import br.com.rphmelo.repofinder.R
 import br.com.rphmelo.repofinder.data.model.RepoSearchRequest
@@ -21,6 +23,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
     lateinit var repoViewModel: RepoViewModel
+    lateinit var recycleView: RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -33,26 +36,47 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         configureDagger()
+
         configureViewModel()
+        setupRecyclerView()
+
+        observeSearchRepoLoading()
+        observeSearchRepoList()
+
+        observeSearchRepoError()
         searchRepos()
     }
 
-    private fun searchRepos() {
+    private fun setupRecyclerView(){
+        recycleView = rvRepos
+        recycleView.layoutManager = LinearLayoutManager(context!!)
+    }
+
+    private fun observeSearchRepoError() {
+        repoViewModel.repoError.observe(this, Observer {
+            Toast.makeText(context, it?.message.toString(), Toast.LENGTH_LONG).show()
+        })
+    }
+
+    private fun observeSearchRepoLoading() {
         repoViewModel.isLoading.observe(this, Observer {
-            if(it == true){
+            if(it!!){
                 pbLoading.visibility = View.VISIBLE
             } else {
                 pbLoading.visibility = View.GONE
             }
         })
+    }
 
+    private fun observeSearchRepoList() {
+        repoViewModel.repoList.observe(this, Observer {
+            recycleView.adapter = RepoListAdapter(context!!, it!!)
+        })
+    }
+
+    private fun searchRepos() {
         val repoSearchRequest = RepoSearchRequest("language:java", "stars", 1)
-
-        repoViewModel.searchRepos(repoSearchRequest, onNext = {
-            val recycleView = rvRepos
-            recycleView.adapter = RepoListAdapter(context!!, it.items)
-            recycleView.layoutManager = LinearLayoutManager(context!!)
-        }, onError = {})
+        repoViewModel.searchRepos(repoSearchRequest)
     }
 
     private fun configureDagger() {
@@ -62,6 +86,4 @@ class HomeFragment : Fragment() {
     private fun configureViewModel() {
         repoViewModel = ViewModelProviders.of(this, viewModelFactory).get(RepoViewModel::class.java)
     }
-
-
 }
