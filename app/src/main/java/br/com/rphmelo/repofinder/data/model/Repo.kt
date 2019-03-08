@@ -3,19 +3,19 @@ package br.com.rphmelo.repofinder.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Repo(
-        @SerializedName("name") val name: String,
-        @SerializedName("full_name") val fullName: String,
-        @SerializedName("description") val description: String,
-        @SerializedName("created_at") val createdAt: String,
-        @SerializedName("updated_at") val updatedAt: String,
-        @SerializedName("pushed_at") val pushedAt: String,
-        @SerializedName("language") val language: String,
-        @SerializedName("open_issues_count") val openIssuesCount: Int,
-        @SerializedName("forks_count") val forksCounts: Int,
-        @SerializedName("html_url") val htmlUrl: String,
-        @SerializedName("owner") val owner: RepoOwner,
-        @SerializedName("stargazers_count") val stars: Int,
-        @SerializedName("has_issues") val hasIssues: Boolean
+        @SerializedName("name") var name: String,
+        @SerializedName("full_name") var fullName: String,
+        @SerializedName("description") var description: String,
+        @SerializedName("created_at") var createdAt: String,
+        @SerializedName("updated_at") var updatedAt: String,
+        @SerializedName("pushed_at") var pushedAt: String,
+        @SerializedName("language") var language: String,
+        @SerializedName("open_issues_count") var openIssuesCount: Int,
+        @SerializedName("forks_count") var forksCounts: Int,
+        @SerializedName("html_url") var htmlUrl: String,
+        @SerializedName("owner") var owner: RepoOwner,
+        @SerializedName("stargazers_count") var stars: Int,
+        @SerializedName("has_issues") var hasIssues: Boolean
 ) {
     constructor(): this(
             "",
