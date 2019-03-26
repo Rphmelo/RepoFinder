@@ -28,9 +28,11 @@ class RepoViewModel @Inject constructor(var repoRepository: RepoRepository, priv
                     .subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { setLoading(true) }
+                    .doOnComplete { setLoading(false) }
                     .subscribe(object: Observer<RepoResponse> {
                         override fun onComplete() {
-                            isLoading.value = false
+
                         }
 
                         override fun onSubscribe(d: Disposable) {
@@ -44,10 +46,12 @@ class RepoViewModel @Inject constructor(var repoRepository: RepoRepository, priv
                         override fun onError(e: Throwable) {
                             repoError.value = e
                         }
-
                     })
         }
+    }
 
+    private fun setLoading(value: Boolean){
+        isLoading.value = value
     }
 
     override fun onCleared() {

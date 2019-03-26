@@ -16,20 +16,4 @@ data class Repo(
         @SerializedName("owner") var owner: RepoOwner,
         @SerializedName("stargazers_count") var stars: Int,
         @SerializedName("has_issues") var hasIssues: Boolean
-) {
-    constructor(): this(
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            0,
-            0,
-            "",
-            RepoOwner(),
-            0,
-            false
-    )
-}
+)

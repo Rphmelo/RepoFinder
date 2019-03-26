@@ -11,12 +11,15 @@ import org.junit.Test
 
 import org.junit.Before
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import java.util.concurrent.Executors
 import org.junit.Rule
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mockito.`when`
+
+
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -66,13 +69,33 @@ class RepoViewModelTest {
         val repoResponse = RepoResponse(12, false, listOf(repoFake))
 
         val observable = Observable.just(repoResponse)
-        Mockito.`when`(mockRepository.searchRepos(repoSearchRequest))
+
+        `when`(mockRepository.searchRepos(repoSearchRequest))
                 .thenReturn(observable)
 
         repoViewModel.searchRepos(repoSearchRequest)
 
-        observable.test()
+        observable
+                .test()
                 .assertResult(repoResponse)
 
+    }
+
+    @Test
+    fun should_assert_that_searchRepos_was_not_called_successfully(){
+        val repoSearchRequest = RepoSearchRequest("language:java", "stars", 1)
+        val errorMessageFake = "Erro"
+        val errorFake = Throwable(errorMessageFake)
+        val observableErrorFake = Observable.error<RepoResponse>(errorFake)
+
+        `when`(mockRepository.searchRepos(repoSearchRequest))
+                .thenReturn(Observable.error<RepoResponse>(errorFake))
+
+        observableErrorFake
+                .test()
+                .assertSubscribed()
+                .assertError(errorFake)
+                .assertNotComplete()
+                .assertValues()
     }
 }
